@@ -24,22 +24,24 @@ from main import views, apis
 
 
 urlpatterns = [
+
     url(r'^admin/', admin.site.urls),
-    url(r'^celery/', views.celery_task_checker, name='celery_task_checker'),
+   url(r'^celery/', views.celery_task_checker, name='celery_task_checker'),
+
     url(r'^api_auth_token/', views.get_auth_token, name='gblapi'),
 
-    url(r'^seller/signin/', auth_views.LoginView.as_view(),{'template_name':'store/signin.html'}, name="store-signin" ),
-    url(r'^seller/signout', auth_views.LogoutView.as_view(),{'next_page': '/store/signin'}, name="store-signout"),
-    url(r'^seller/signup', views.store_signup, name="store-signup"),
-    url(r'^seller/$', views.store_home, name='store_home'),
+    url(r'^store/signin/', auth_views.LoginView.as_view(),{'template_name':'store/signin.html'}, name="store-signin" ),
+    url(r'^store/signout', auth_views.LogoutView.as_view(),{'next_page': '/store/signin'}, name="store-signout"),
+    url(r'^store/signup', views.store_signup, name="store-signup"),
+    url(r'^store/$', views.store_home, name='store_home'),
 
-    url(r'^seller/accounts/$', views.store_account, name='store_account'),
-    url(r'^seller/order/$', views.store_tasks, name="store_tasks"),
-    url(r'^seller/orders/details/(?P<pk>\d+)/', views.TaskDetails.as_view(), name="task_details"),
-    url(r'^seller/create_task/$', views.create_task, name="create_task"),
-    url(r'^api/seller/cancel_task/$', apis.store_manager_cancel_task),
+    url(r'^store/accounts/$', views.store_account, name='store_account'),
+    url(r'^store/tasks/$', views.store_tasks, name="store_tasks"),
+    url(r'^store/tasks/details/(?P<pk>\d+)/', views.TaskDetails.as_view(), name="task_details"),
+    url(r'^store/create_task/$', views.create_task, name="create_task"),
+    url(r'^api/store/cancel_task/$', apis.store_manager_cancel_task),
 
-    url(r'^api/seller/order/notification/(?P<last_request_time>.+)/$', apis.store_task_notification),
+    url(r'^api/store/task/notification/(?P<last_request_time>.+)/$', apis.store_task_notification),
 
     url(r'^deliver/signin/', auth_views.LoginView.as_view(),{'template_name':'deliver/signin.html'}, name="delivery_boy-signin" ),
     url(r'^deliver/signout', auth_views.LogoutView.as_view(),{'next_page': '/deliver/signin'}, name="delivery_boy-signout"),
@@ -58,14 +60,12 @@ urlpatterns = [
     url(r'^api/deliver/task/reject/$', apis.delivery_boy_reject_task),
     url(r'^api/deliver/task/completed_tasks/$', apis.get_deliver_boy_completed_tasks),
 
-    #url(r'^$',views.home,name="home"),
-
     url(r'^$', views.roothome, name="home"),
     url(r'^services/', views.services, name='services'),
     url(r'^whygobd/', views.whygobd, name='whygobd'),
     url(r'^aboutus/', views.aboutus, name='aboutus'),
     url(r'^contact/', views.contact, name='contact'),
-    url(r'^djga/', include('google_analytics.urls')),
+    # url(r'^djga/', include('google_analytics.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

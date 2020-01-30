@@ -6,7 +6,7 @@
     <div class="col-xl-12">
     <div class="card-box">
     <h4 class="header-title mb-3">update seller account</h4>
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST">
         {% csrf_token %}
         {{ store_form|crispy }}
       <button type="submit" class="btn btn-success">update</button>
@@ -14,4 +14,4 @@
     </div>
     </div>
  </div>
-{% endblock%}
+{% endblock page %}

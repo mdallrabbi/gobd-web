@@ -18,10 +18,10 @@ from rest_framework import viewsets
 from django.views.generic import TemplateView, CreateView, DetailView
 from main.models import Store, Task
 from main.forms import (UserForm,
-                         UserEditForm,
-                         StoreForm,
-                         TaskForm,
-                         DeliveryBoyForm)
+                        UserEditForm,
+                        StoreForm,
+                        TaskForm,
+                        DeliveryBoyForm)
 
 
 # from store.tasks import store_created_new_task_notification
@@ -46,22 +46,22 @@ def get_auth_token(request):
     return redirect(store_home)
 
 
-@login_required(login_url='/seller/signin')
+@login_required(login_url='/store/signin')
 def store_home(request):
     return redirect(store_tasks)
 
 
 def store_signup(request):
     user_form = UserForm()
-    #store_form = StoreForm()
+    store_form = StoreForm()
 
     if request.method == "POST":
         user_form = UserForm(request.POST)
-        #store_form = StoreForm(request.POST)
+        store_form = StoreForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid() and store_form.is_valid():
             new_user_instance = User.objects.create_user(**user_form.cleaned_data)
-            new_store_instance = user_form.save(commit=False)
+            new_store_instance = store_form.save(commit=False)
             new_store_instance.user = new_user_instance
             new_store_instance.save()
 
@@ -71,25 +71,25 @@ def store_signup(request):
             ))
             return redirect(store_home)
     return render(request, "store/store_signup.html",
-                  {"user_form": user_form })
+                  {"user_form": user_form, "store_form": store_form})
 
 
-@login_required(login_url='/seller/signin/')
+@login_required(login_url='/store/signin/')
 def store_account(request):
-    # user_form = UserEditForm(instance=request.user)
+    user_form = UserEditForm(instance=request.user)
     store_form = StoreForm(instance=request.user.store)
 
     if request.method == "POST":
-        # user_form = UserEditForm(request.POST, instance=request.user)
+        user_form = UserEditForm(request.POST, instance=request.user)
         store_form = StoreForm(request.POST, instance=request.user.store)
-        if store_form.is_valid():
+        if user_form.is_valid() and store_form.is_valid():
+            user_form.save()
             store_form.save()
-            #store_form.save()
     return render(request, 'store/store_account.html',
-                  {'store_form': store_form })
+                  {'user_form': user_form, 'store_form': store_form})
 
 
-@login_required(login_url='/seller/signin/')
+@login_required(login_url='/store/signin/')
 def create_task(request):
     task_form = TaskForm()
     if request.method == "POST":
@@ -107,7 +107,7 @@ def create_task(request):
     return render(request, 'store/create_task.html', {'task_form': task_form})
 
 
-@login_required(login_url="/seller/signin")
+@login_required(login_url="/store/signin")
 def store_tasks(request):
     print("user")
     print(request.user.store)
@@ -118,7 +118,7 @@ def store_tasks(request):
     return render(request, "store/tasks.html", {"tasks": tasks})
 
 
-@login_required(login_url="/seller/signin")
+@login_required(login_url="/store/signin")
 def store_task(request, id):
     task = Task.objects.get(id=id, store=request.user.store)
     return render(request, "store/task.html", {"task": task})
@@ -126,15 +126,15 @@ def store_task(request, id):
 
 def delivery_boy_signup(request):
     user_form = UserForm()
-    # delivery_boy_form = DeliveryBoyForm()
+    delivery_boy_form = DeliveryBoyForm()
 
     if request.method == "POST":
         user_form = UserForm(request.POST)
-        # delivery_boy_form = DeliveryBoyForm(request.POST)
+        delivery_boy_form = DeliveryBoyForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid() and delivery_boy_form.is_valid():
             new_user_instance = User.objects.create_user(**user_form.cleaned_data)
-            delivery_boy_instance = user_form.save(commit=False)
+            delivery_boy_instance = delivery_boy_form.save(commit=False)
             delivery_boy_instance.user = new_user_instance
             delivery_boy_instance.save()
 
@@ -144,30 +144,30 @@ def delivery_boy_signup(request):
             ))
             return redirect(delivery_boy_home)
     return render(request, "deliver/delivery_boy_signup.html",
-                  {"user_form": user_form })
+                  {"user_form": user_form, "delivery_boy_form": delivery_boy_form})
 
 
 @login_required(login_url='/deliver/signin')
 def delivery_boy_home(request):
     return redirect(deliver_tasks)
-
+    # return render(request, "deliver/tasks.html")
 
 @login_required(login_url='/deliver/signin')
 def delivery_boy_account(request):
-    # user_form = UserEditForm(instance=request.user)
+    user_form = UserEditForm(instance=request.user)
     delivery_boy_form = DeliveryBoyForm(
         instance=request.user.delivery_boy)
 
     if request.method == "POST":
-        # user_form = UserEditForm(
-        #     request.POST, instance=request.user)
+        user_form = UserEditForm(
+            request.POST, instance=request.user)
         delivery_boy_form = DeliveryBoyForm(
             request.POST, instance=request.user.delivery_boy)
-        if delivery_boy_form.is_valid():
+        if user_form.is_valid() and delivery_boy_form.is_valid():
+            user_form.save()
             delivery_boy_form.save()
-            #delivery_boy_form.save()
     return render(request, 'deliver/delivery_boy_account.html',
-                  {'delivery_boy_form': delivery_boy_form})
+                  {'user_form': user_form, 'delivery_boy_form': delivery_boy_form})
 
 
 @login_required(login_url="/deliver/signin")
@@ -175,7 +175,7 @@ def deliver_tasks(request):
     tasks = Task.objects.filter(delivery_boy=None).exclude(
         Q(status=Task.RETURN) | Q(status=Task.DELIVERED)).order_by('-created_at')
     accepted_tasks = Task.objects.filter(
-        status=Task.ACCEPTED, delivery_boy=request.user.delivery_boy).order_by('-created_at')
+        status=Task.PICKUP, delivery_boy=request.user.delivery_boy).order_by('-created_at')
     completed_tasks = Task.objects.filter(
         status=Task.DELIVERED, delivery_boy=request.user.delivery_boy).order_by('-created_at')
     return render(request, "deliver/tasks.html",

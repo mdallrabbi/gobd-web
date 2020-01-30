@@ -1,11 +1,194 @@
-{% extends 'base.html' %}
-{% block title %} gobd.delivery - rider {% endblock %}
+{% load static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %} gobd dashboard {% endblock title %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="gobd.delivery" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- App css -->
+        <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{% static 'images/dir/ico.png'%}">
+        <!-- Plugins css -->
+        <link href="{% static 'assets/libs/flatpickr/flatpickr.min.css'%}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'assets/fonts/materialdesignicons-webfont.woff2'%}"/>
+        <link href="{% static 'assets/fonts/cerebrisans-medium.woff'%}"/>
+        <link href="{% static 'assets/fonts/materialdesignicons-webfont.woff'%}"/>
+        <link href="{% static 'assets/fonts/feather.ttf'%}"/>
+    </head>
 
-{% block script %}
-{% endblock script %}
 
-{% block sidebar %}
-{% endblock sidebar %}
+    <body>
+        <!-- Begin page -->
+        <div id="wrapper">
 
-{% block page %}
-{% endblock page %}
+            {% include "./partials/topbar-light.html" %}
+            {% include "./partials/left-sidebar-rider.html" %}
+
+{#            @@include('./partials/topbar.html')#}
+{#            @@include('./partials/left-sidebar.html')#}
+
+            <div class="content-page">
+                <div class="content">
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <div class="input-group input-group-sm">
+                                                    <input type="text" class="form-control border-white" id="dash-daterange">
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text bg-blue border-blue text-white">
+                                                            <i class="mdi mdi-calendar-range font-13"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a href="javascript: void(0);" class="btn btn-blue btn-sm ml-2">
+                                                <i class="mdi mdi-autorenew"></i>
+                                            </a>
+                                            <a href="javascript: void(0);" class="btn btn-blue btn-sm ml-1">
+                                                <i class="mdi mdi-filter-variant"></i>
+                                            </a>
+                                        </form>
+                                    </div>
+                                    <h4 class="page-title">seller dashboard</h4>
+                                </div>
+                            </div>
+                        </div>
+                        {% block page %}
+
+                        {% endblock page %}
+                        <!-- end row -->
+
+                        <!-- end page title -->
+
+                        <div class="row">
+                            <div class="col-md-6 col-xl-3">
+                                <div class="widget-rounded-circle card-box">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="avatar-lg rounded-circle bg-soft-primary border-primary border">
+                                                <i class="fe-heart font-22 avatar-title text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0</span></h3>
+                                                <p class="text-muted mb-1 text-truncate">Total Order</p>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row-->
+                                </div> <!-- end widget-rounded-circle-->
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="widget-rounded-circle card-box">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="avatar-lg rounded-circle bg-soft-success border-success border">
+                                                <i class="fe-shopping-cart font-22 avatar-title text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0</span></h3>
+                                                <p class="text-muted mb-1 text-truncate">New Order</p>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row-->
+                                </div> <!-- end widget-rounded-circle-->
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="widget-rounded-circle card-box">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="avatar-lg rounded-circle bg-soft-info border-info border">
+                                                <i class="fe-bar-chart-line- font-22 avatar-title text-info"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0</span>%</h3>
+                                                <p class="text-muted mb-1 text-truncate">Total Order Delivered</p>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row-->
+                                </div> <!-- end widget-rounded-circle-->
+                            </div> <!-- end col-->
+
+                            <div class="col-md-6 col-xl-3">
+                                <div class="widget-rounded-circle card-box">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="avatar-lg rounded-circle bg-soft-warning border-warning border">
+                                                <i class="fe-eye font-22 avatar-title text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <h3 class="text-dark mt-1"><span data-plugin="counterup">0</span></h3>
+                                                <p class="text-muted mb-1 text-truncate">Today's Visits</p>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end row-->
+                                </div> <!-- end widget-rounded-circle-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row-->
+                    </div> <!-- container -->
+                </div> <!-- content -->
+
+                {% include "./partials/footer.html" %}
+
+{#                @@include('./partials/footer.html')#}
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- END wrapper -->
+{#        @@include('./partials/right-sidebar.html')#}
+        <!-- Plugins js-->
+        <script src="{% static 'assets/libs/flatpickr/flatpickr.min.js'%}"></script>
+        <script src="{% static 'assets/libs/jquery-knob/jquery-knob.min.js'%}"></script>
+        <script src="{% static 'assets/libs/jquery-sparkline/jquery-sparkline.min.js'%}"></script>
+        <script src="{% static 'assets/libs/flot-charts/flot-charts.min.js'%}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.time.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flot.tooltip/0.9.0/jquery.flot.tooltip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.selection.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.crosshair.js"></script>
+        <!-- Vendor js -->
+        <script src="{% static 'assets/js/vendor.min.js'%}"></script>
+        <!-- App js-->
+        <script src="{% static 'assets/js/app.min.js'%}"></script>
+        <!-- Dashboar 1 init js-->
+        <script src="{% static 'assets/js/pages/dashboard-1.init.js'%}"></script>
+        <script src="{% static 'assets/js/pages/dashboard-2.init.js'%}"></script>
+        <script src="{% static 'assets/js/pages/datatables.init.js'%}"></script>
+        <script src="{% static 'assets/js/pages/crm-dashboard.init.js'%}"></script>
+        <script src="{% static 'assets/js/pages/crm-leads.init.js'%}"></script>
+        <script src="{% static 'assets/js/pages/form-imagecrop.init.js'%}"></script>
+        <script src="{% static 'assets/js/pages/animation.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/calendar.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/flot.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/jsgrid.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/range-sliders.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/responsive-table.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/vector-maps.init.js' %}"></script>
+        <script src="{% static 'assets/js/pages/widgets.init.js' %}"></script>
+
+    </body>
+</html>

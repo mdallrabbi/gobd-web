@@ -108,7 +108,7 @@
 <script type="text/javascript">
     function cancelTask(id){
          $.ajax({
-            url : '/api/seller/cancel_task/',
+            url : '/api/store/cancel_task/',
             data : {
                 'task_id': id
             },
@@ -124,7 +124,7 @@
 
     function TaskDetails(id){
          $.ajax({
-            url : '/api/seller/task_details/',
+            url : '/api/store/task_details/',
             data : {
                 'task_id': id
             },

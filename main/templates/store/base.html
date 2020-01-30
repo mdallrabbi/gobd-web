@@ -1,11 +1,29 @@
 {% extends 'base.html' %}
-{% block title %} gobd.delivery - seller {% endblock %}
-
+{% block title %} seller base {% endblock %}
 {% block script %}
+	<script type="text/javascript">
+		// $(document).ready(function(){
+		// 	var now =  new Date();
+		// 	setInterval(function(){
+		// 		$.ajax({
+		// 			url: '/api/deliver/task/accept/notification/' + now.toISOString() + '/',
+		// 			method: 'GET',
+		// 			success: function(data){
+		// 				if(data['notification'] === 0){
+		// 					$('.badge').text('');
+		// 				}else{
+		// 					$('.badge').text(data['notification']);
+		// 				}
+		// 			}
+
+		// 		})
+
+		// 	}, 1000)
+
+		// })
+	</script>
 {% endblock script %}
 
 {% block sidebar %}
-{% endblock sidebar %}
 
-{% block page %}
-{% endblock page %}
+{% endblock sidebar %}
