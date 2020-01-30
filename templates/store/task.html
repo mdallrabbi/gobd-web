@@ -1,0 +1,84 @@
+{% extends 'store/base.html' %}
+
+{% block page %}
+<div class="row">
+<div class="col-xl-12">
+    <div class="card-box">
+        <h4 class="header-title mb-3">delivery orders</h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover table-centered m-0">
+
+                <thead class="thead-light">
+                    <tr>
+                        <th>id</th>
+                        <th>product detail</th>
+                        <th>customer</th>
+                        <th>order type</th>
+                        <th>delivery location</th>
+                        <th>tracking status</th>
+                        <th>cancellation</th>
+                        <th>order info</th>
+                        <th>payment type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>
+                            {{ order.id }}
+                        </td>
+                        <td>
+                            <h5 class="m-0 font-weight-normal">{{ order.title }}</h5>
+                        </td>
+                        <td>
+                            {{ order.customer_name }}
+                        </td>
+                        <td>
+                            {{ order.preiority }}
+                        </td>
+                        <td>
+                            {{ order.delivery_location }}
+                        </td>
+                        <td>
+                            {{ order.status }}
+{#                            {% if order.status %}#}
+{#                                {% if order.status == 'ACCEPTED' %}#}
+{#                                    <td class="text-info">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'PICKUP' %}#}
+{#                                    <td class="text-success">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'DELIVERED' %}#}
+{#                                    <td class="text-danger">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'CANCELLED' %}#}
+{#                                    <td class="text-warning">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'RETURN' %}#}
+{#                                    <td class="text-success">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                            {% endif %}#}
+                        </td>
+                        <td>
+                            <button onclick="cancelOrder(`{{order.id}}`)"class="btn btn-danger" id="CancelOrderBtn" >cancel</button>
+                        </td>
+                        <td>
+                            <a href="{{ order.get_absolute_url }}"><button class="btn btn-success">print</button></a>
+                        </td>
+                        <td>
+                            <a href="javascript: void(0);" class="btn btn-xs btn-secondary">
+                                <i class="mdi mdi-pencil">
+                                    {{ order.payment_type }}
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div> <!-- end .table-responsive-->
+    </div> <!-- end card-box-->
+</div> <!-- end col -->
+</div>
+{% endblock page %}

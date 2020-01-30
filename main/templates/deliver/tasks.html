@@ -1,0 +1,72 @@
+{% extends 'store/base.html' %}
+{% block page %}
+<div class="row">
+<div class="col-xl-12">
+    <div class="card-box">
+        <h4 class="header-title mb-3">delivery orders</h4>
+
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover table-centered m-0">
+
+                <thead class="thead-light">
+                    <tr>
+                        <th>id</th>
+                        <th>product detail</th>
+                        <th>priority</th>
+                        <th>delivery boy</th>
+                        <th>created at</th>
+                        <th>accepted at</th>
+                        <th>status</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>
+                            {{ task.id }}
+                        </td>
+                        <td>
+                            <h5 class="m-0 font-weight-normal">{{ task.title }}</h5>
+                        </td>
+                        <td>
+                            {{ task.priority }}
+                        </td>
+                        <td>
+                            {{ task.delivery_boy }}
+                        </td>
+                        <td>
+                            {{ task.created_at }}
+                        </td>
+                        <td>
+                            {{ task.accepted_at }}
+                        </td>
+                        <td>
+                            {{ task.status }}
+{#                            {% if task.status %}#}
+{#                                {% if task.status == 'ACCEPTED' %}#}
+{#                                    <td class="text-info">{{ task.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if task.status == 'DELIVERED' %}#}
+{#                                    <td class="text-success">{{ task.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if task.status == 'REJECTED' %}#}
+{#                                    <td class="text-danger">{{ task.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if task.status == 'PICKUP' %}#}
+{#                                    <td class="text-success">{{ task.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                           {% endif %}#}
+                        </td>
+                        <td>
+                            <button class="btn btn-danger">modify</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div> <!-- end .table-responsive-->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+</div>
+{% endblock page %}

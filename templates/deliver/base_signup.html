@@ -1,0 +1,14 @@
+{% extends 'base_signup.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}rider sign up{% endblock title %}
+{% block heading %}sign up for gobd.delivery rider{% endblock heading %}
+
+{% block content %}
+  <form method="POST">
+    {% csrf_token %}
+    {{ user_form|crispy }}
+    <button type="submit" class="btn btn-success">sign up</button>
+  </form>
+  <a href="{% url 'delivery_boy-signin' %}">already have a account?</a>
+{% endblock content %}

@@ -1,0 +1,189 @@
+{% extends 'deliver/base.html' %}
+
+{% block page %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box">
+            <h4 class="header-title mb-3">available pickup</h4>
+            <div class="table-responsive">
+                <table class="table table-borderless table-hover table-centered m-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>id</th>
+                            <th>product title</th>
+                            <th>seller</th>
+                            <th>priority</th>
+                            <th>action</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>
+                                {{ task.id }}
+                            </td>
+                            <td>
+                                <h5 class="m-0 font-weight-normal">{{ task.title }}</h5>
+                            </td>
+                            <td>
+                                {{ task.store }}
+                            </td>
+                            <td>
+                                {{ task.priority }}
+                            </td>
+                            <td>
+                                <button class="btn btn-success" onclick="AcceptTask({{task.id}})">PICKUP</button></td>
+                                <td><button class="btn btn-danger" onclick="RejectTask({{task.id}})">REJECT</button></td>
+                                <td><button class="btn btn-primary" onclick="CompletedTask({{task.id}})">DELIVERED</button>
+                            </td>
+                            <td>
+                                {{task.status}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div> <!-- end .table-responsive-->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+</div>
+
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box">
+            <h4 class="header-title mb-3">pickup requests</h4>
+            <div class="table-responsive">
+                <table class="table table-borderless table-hover table-centered m-0">
+
+                    <thead class="thead-light">
+                        <tr>
+                            <th>id</th>
+                            <th>product title</th>
+                            <th>seller</th>
+                            <th>rejected</th>
+                            <th>delivered</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in accepted_tasks %}
+                        <tr>
+                            <td>
+                                {{ task.id }}
+                            </td>
+                            <td>
+                                <h5 class="m-0 font-weight-normal">{{ task.title }}</h5>
+                            </td>
+                            <td>
+                                {{ task.store }}
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="RejectTask({{task.id}})">reject</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" onclick="CompletedTask({{task.id}})">delivered</button>
+                            </td>
+                            <td>
+                                {{task.status}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div> <!-- end .table-responsive-->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box">
+            <h4 class="header-title mb-3">delivered orders</h4>
+            <div class="table-responsive">
+                <table class="table table-borderless table-hover table-centered m-0">
+
+                    <thead class="thead-light">
+                        <tr>
+                            <th>id</th>
+                            <th>product title</th>
+                            <th>seller</th>
+                            <th>delivered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in completed_tasks %}
+                        <tr>
+                            <td>
+                                {{ task.id }}
+                            </td>
+                            <td>
+                                <h5 class="m-0 font-weight-normal">{{ task.title }}</h5>
+                            </td>
+                            <td>
+                                {{ task.store }}
+                            </td>
+                            <td>
+                                {{task.status}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div> <!-- end .table-responsive-->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+</div>
+
+<script type="text/javascript">
+    function AcceptTask(id){
+        // alert(id)
+        $.ajax({
+            url: '/api/deliver/task/accept/',
+            data: {
+                'task_id': id
+            },
+            dataType: 'json',
+            success: function(result){
+                alert(result.result);
+            },
+            error: function(result){
+                alert('error');
+            }
+        });
+    }
+    function RejectTask(id){
+        $.ajax({
+            url: '/api/deliver/task/reject/',
+            data: {
+                'task_id': id
+            },
+            dataType: 'json',
+            success: function(result){
+                alert(result.status);
+            },
+            error: function(result){
+                alert(result.status);
+            }
+        });
+    }
+    function CompletedTask(id){
+        $.ajax({
+            url: '/api/deliver/task/complete/',
+            data: {
+                'task_id': id
+            },
+            dataType: 'json',
+            success: function(result){
+                alert(result.status);
+            },
+            error: function(result){
+                alert(result.status);
+            }
+        });
+    }
+</script>
+{% endblock page %}

@@ -1,0 +1,57 @@
+{% load static %}
+{% load staticfiles %}
+{% block sidebar %}
+<div class="left-side-menu">
+    <div class="slimscroll-menu">
+        <div id="sidebar-menu">
+            <div class="user-box text-center">
+            <img src="{% static 'assets/images/users/avater.png' %}" alt="user-img" title="Mat Helme" class="rounded-circle avatar-md">
+            <div class="dropdown">
+               {% firstof request.user.get_short_name request.user.get_username %}
+                <div class="dropdown-menu user-pro-dropdown">
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="fe-user mr-1"></i>
+                        <span>seller account</span>
+                    </a>
+                </div>
+            </div>
+            <p class="text-muted">Golden Client</p>
+            </div>
+
+
+            <ul class="metismenu" id="side-menu">
+                <li>
+                    <a href="{% url 'store_home' %}">
+                        <i class="fe-airplay"></i>
+                        <span> dashboard </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'create_task' %}">
+                        <i class="fe-folder-plus"></i>
+                        <span> new order </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'store_tasks' %}">
+                        <i class="fe-shopping-cart"></i>
+                        <span> order list </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'store_account' %}">
+                        <i class="fe-package"></i>
+                        <span> update account </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'store-signin' %}" class="btn-outline-light">
+                        <i class="fe-user"></i>
+                        <span> logout </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock sidebar %}

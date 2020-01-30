@@ -1,0 +1,61 @@
+{% extends 'store/base.html' %}
+{% block page %}
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-box">
+            <h4 class="header-title mb-3">delivery order</h4>
+            <div class="table-responsive">
+                <table class="table table-borderless table-hover table-centered m-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>id</th>
+                            <th>product title</th>
+                            <th>customer</th>
+                            <th>order type</th>
+                            <th>delivery location</th>
+                            <th>tracking status</th>
+                            <th>carrying by</th>
+                            <th>payment type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>
+                                {{ order.id }}
+                            </td>
+                            <td>
+                                <h5 class="m-0 font-weight-normal">{{ order.title }}</h5>
+                            </td>
+                            <td>
+                                {{ order.customer_name }}
+                            </td>
+                            <td>
+                                {{ order.priority }}
+                            </td>
+                            <td>
+                                {{ order.delivery_location }}
+                            </td>
+
+                            <td>
+                                {{ order.status }}
+                            </td>
+                            <td>
+                                {{ order.delivery_man }}
+                            </td>
+                            <td>
+                                <a href="javascript: void(0);" class="btn btn-xs btn-secondary">
+                                    <i class="mdi mdi-pencil">
+                                        {{ order.payment_type }}
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div> <!-- end .table-responsive-->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+</div>
+{% endblock page %}

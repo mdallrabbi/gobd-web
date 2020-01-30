@@ -1,0 +1,142 @@
+{% extends 'store/base.html' %}
+{% block page %}
+<div class="row">
+<div class="col-xl-12">
+    <div class="card-box">
+        <h4 class="header-title mb-3">delivery orders</h4>
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover table-centered m-0">
+                <thead class="thead-light">
+                    <tr>
+                        <th>id</th>
+                        <th>product detail</th>
+                        <th>customer</th>
+                        <th>order type</th>
+                        <th>delivery location</th>
+                        <th>tracking status</th>
+                        <th>cancellation</th>
+                        <th>order info</th>
+                        <th>payment type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>
+                            {{ task.id }}
+                        </td>
+                        <td>
+                            <h5 class="m-0 font-weight-normal">{{ task.title }}</h5>
+                        </td>
+                        <td>
+                            {{ task.customer_name }}
+                        </td>
+                        <td>
+                            {{ task.priority }}
+                        </td>
+                        <td>
+                            {{ task.delivery_location }}
+                        </td>
+                        <td>
+                            {{ task.status }}
+{#                            {% if order.status %}#}
+{#                                {% if order.status == 'ACCEPTED' %}#}
+{#                                    <td class="text-info">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'PICKUP' %}#}
+{#                                    <td class="text-success">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'DELIVERED' %}#}
+{#                                    <td class="text-danger">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'CANCELLED' %}#}
+{#                                    <td class="text-warning">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                                {% if order.status == 'RETURN' %}#}
+{#                                    <td class="text-success">{{ order.status }}</td>#}
+{#                                {% else %}{% endif %}#}
+{#                            {% endif %}#}
+                        </td>
+                        <td>
+                            <button onclick="cancelOrder(`{{task.id}}`)"class="btn btn-danger" id="CancelOrderBtn" >cancel</button>
+                        </td>
+                        <td>
+                            <a href="{{ task.get_absolute_url }}"><button class="btn btn-success">print</button></a>
+                        </td>
+                        <td>
+                            <a href="javascript: void(0);" class="btn btn-xs btn-secondary">
+                                <i class="mdi mdi-pencil">
+                                    {{ task.payment_type }}
+                                </i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div> <!-- end .table-responsive-->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+</div>
+
+
+{#<div class="row">#}
+{#<div class="col-xl-12">#}
+{#    <div class="card-box">#}
+{#        <h4 class="header-title mb-3">delivery orders</h4>#}
+{#        <div class="modal fade" id="myModal" role="dialog">#}
+{#            <div class="modal-dialog">#}
+{#                <!-- Modal content-->#}
+{#                <div class="modal-content">#}
+{#                    <div class="modal-header">#}
+{#                        <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+{#                        <h4 class="modal-title">{{task.id}}</h4>#}
+{#                    </div>#}
+{#                    <div class="modal-body">#}
+{#                        <p>Some text in the modal.</p>#}
+{#                    </div>#}
+{#                    <div class="modal-footer">#}
+{#                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#</div>#}
+
+<script type="text/javascript">
+    function cancelTask(id){
+         $.ajax({
+            url : '/api/seller/cancel_task/',
+            data : {
+                'task_id': id
+            },
+            dataType: 'json',
+            success: function(result){
+                alert("Task was canceld");
+            },
+            error: function(result){
+                alert('error');
+            }
+         });
+    }
+
+    function TaskDetails(id){
+         $.ajax({
+            url : '/api/seller/task_details/',
+            data : {
+                'task_id': id
+            },
+            dataType: 'json',
+            success: function(result){
+                alert(result);
+            },
+            error: function(result){
+                alert('error');
+            }
+         });
+    }
+
+</script>
+{% endblock page %}

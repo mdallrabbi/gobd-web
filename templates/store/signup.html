@@ -1,0 +1,15 @@
+{% extends 'base_signup.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}seller sign up{% endblock %}
+{% block heading %}sign up for gobd.delivery {% endblock %}
+
+{% block content %}
+  <form method="POST">
+    {% csrf_token %}
+    {{ user_form|crispy }}
+    <button type="submit" class="btn btn-success">sign up</button>
+  </form>
+
+  <a href="{% url 'store-signin' %}">already have an account?</a>
+{% endblock content %}

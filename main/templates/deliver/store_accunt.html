@@ -1,0 +1,16 @@
+{% extends 'store/base.html' %}
+{% load crispy_forms_tags %}
+{% block page %}
+ <div class="row">
+     <div class="col-xl-12">
+         <div class="card-box">
+             <h4 class="header-title mb-3">update seller account</h4>
+             <form method="POST">
+                 {% csrf_token %}
+                 {{ store_form|crispy }}
+                 <button type="submit" class="btn btn-success">update</button>
+             </form>
+         </div>
+     </div>
+ </div>
+{% endblock page %}
