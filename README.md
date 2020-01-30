@@ -2,7 +2,6 @@
 #### seller can create profile and place delivery requests.
 #### a seller can cancel orders which not yet accepted by a delivery boy.
 #### a seller can view all order list and their status on dashboard.
-
 #### delivery boy can Accept New Tasks from store.
 #### delivery boy can reject his/her task once accepted.
 #### delivery boy can view all his Past accepted tasks and completed tasks on dashboard.

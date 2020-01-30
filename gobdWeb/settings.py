@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ly*e!0e=9*j%sx)5qgr5z0k#32*eb=po8h=+v)o@qmg%92jpux'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', '199.192.22.92', 'gobd.delivery', 'wwww.gobd.delivery']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', '199.192.22.92', 'gobd.delivery']
 # ALLOWED_HOSTS = ['*']
 # ssl certificate
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -144,7 +144,7 @@ USE_TZ = True
 
 LOGIN_URL = '/seller/'
 LOGIN_REDIRECT_URL = '/seller/order/'
-# LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Static files (CSS, JavaScript, Images)
@@ -159,14 +159,14 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# BROKER_URL = 'amqp://localhost'
-# CELERY_RESULT_BACKEND = 'amqp://localhost'
+BROKER_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND = 'amqp://localhost'
 #BROKER_URL = 'c'
-# CELERY_IMPORTS = ('google_analytics.tasks')
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_TASK_SERIALIZER = ['json']
-# CELERY_RESULT_SERIALIZER = ['json']
-# CELERY_TIMEZONE = 'Asia/Dhaka'
+#CELERY_IMPORTS = ('google_analytics.tasks')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = ['json']
+CELERY_RESULT_SERIALIZER = ['json']
+CELERY_TIMEZONE = 'Asia/Dhaka'
 
 # Channels settings
 CHANNEL_LAYERS = {
