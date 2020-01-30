@@ -189,6 +189,26 @@ class TaskDetails(DetailView):
     model = Task
     context_object_name = 'task'
 
+
+def roothome(request):
+    return render(request, 'index.html')
+
+
+def services(request):
+    return render(request, 'services.html')
+
+
+def whygobd(request):
+    return render(request, 'whygobd.html')
+
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
+
 # def handler404(request, *args, **argv):
 #     response = render_to_response('custom_404_view.html', {},
 #                                   context_instance=RequestContext(request))

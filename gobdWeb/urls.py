@@ -58,7 +58,15 @@ urlpatterns = [
     url(r'^api/deliver/task/complete/$', apis.delivery_boy_complete_task),
     url(r'^api/deliver/task/reject/$', apis.delivery_boy_reject_task),
     url(r'^api/deliver/task/completed_tasks/$', apis.get_deliver_boy_completed_tasks),
-    url(r'^$',views.home,name="home"),
+
+    #url(r'^$',views.home,name="home"),
+
+    url(r'^$', views.roothome, name="home"),
+    url(r'^services/', views.services, name='services'),
+    url(r'^whygobd/', views.whygobd, name='whygobd'),
+    url(r'^aboutus/', views.aboutus, name='aboutus'),
+    url(r'^contact/', views.contact, name='contact'),
+    url(r'^djga/', include('google_analytics.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
