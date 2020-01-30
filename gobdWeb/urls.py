@@ -26,8 +26,7 @@ from main import views, apis
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^celery/', views.celery_task_checker, name='celery_task_checker'),
-
-    url(r'^api_auth_token/', views.get_auth_token),
+    url(r'^api_auth_token/', views.get_auth_token, name='gblapi'),
 
     url(r'^seller/signin/', auth_views.LoginView.as_view(),{'template_name':'store/signin.html'}, name="store-signin" ),
     url(r'^seller/signout', auth_views.LogoutView.as_view(),{'next_page': '/store/signin'}, name="store-signout"),
