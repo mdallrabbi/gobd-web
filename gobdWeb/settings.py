@@ -23,15 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'ly*e!0e=9*j%sx)5qgr5z0k#32*eb=po8h=+v)o@qmg%92jpux'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-# ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', '199.192.22.92', 'gobd.delivery', 'wwww.gobd.delivery']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', '199.192.22.92', 'gobd.delivery', 'wwww.gobd.delivery']
+# ALLOWED_HOSTS = ['*']
 # ssl certificate
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
