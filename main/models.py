@@ -141,7 +141,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=100, help_text="product name")
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    delivery_boy = models.ForeignKey(DeliveryBoy, on_delete=models.CASCADE)
+    delivery_boy = models.ForeignKey(DeliveryBoy, on_delete=models.CASCADE, null=True, blank=True)
 
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=ON_DEMAND)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=ACCEPTED)
