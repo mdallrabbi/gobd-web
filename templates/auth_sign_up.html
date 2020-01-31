@@ -7,7 +7,7 @@
 {% block content %}
   <form method="POST">
     {% csrf_token %}
-    {{ user_form|crispy }}
+    {{ auth_signup|crispy }}
     <button type="submit" class="btn btn-success">sign up</button>
   </form>
   <a href="{% url 'store-signin' %}">already have an account?</a>

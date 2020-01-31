@@ -52,22 +52,45 @@ def store_home(request):
     return redirect(store_tasks)
 
 
-def store_signup(request):
+def auth_signup(request):
     if request.method == "POST":
-        store_user_form = StoreSignUpForm(request.POST)
-        if store_user_form.is_valid:
-            store = store_user_form.save()
+        auth_signup = StoreSignUpForm(request.POST)
+        if auth_signup.is_valid:
+            store = auth_signup.save()
             store.refresh_from_db()
             store.save()
-            raw_password = store_user_form.cleaned_data.get('password1')
+            raw_password = auth_signup.cleaned_data.get('password1')
             store = authenticate(username=store.username, password=raw_password)
             login(request, store)
             return redirect(store_home)
     else:
-        store_user_form = StoreSignUpForm()
+        auth_signup = StoreSignUpForm()
 
+    return render(request, "auth_sign_up.html",
+                  {"auth_signup": auth_signup})
+
+
+def store_signup(request):
+    user_form = UserForm()
+    store_form = StoreForm()
+
+    if request.method == "POST":
+        user_form = UserForm(request.POST)
+        store_form = StoreForm(request.POST)
+
+        if user_form.is_valid() and store_form.is_valid():
+            new_user_instance = User.objects.create_user(**user_form.cleaned_data)
+            new_store_instance = store_form.save(commit=False)
+            new_store_instance.user = new_user_instance
+            new_store_instance.save()
+
+            login(request, authenticate(
+                username=user_form.cleaned_data["username"],
+                password=user_form.cleaned_data["password"]
+            ))
+            return redirect(store_home)
     return render(request, "store/store_signup.html",
-                  {"store_user_form": store_user_form})
+                  {"user_form": user_form, "store_form": store_form})
 
 
 @login_required(login_url='/store/signin/')

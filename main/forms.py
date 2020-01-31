@@ -8,7 +8,6 @@ from main.models import Task, Store, DeliveryBoy
 
 class StoreSignUpForm(UserCreationForm):
     # store_name = forms.CharField()
-
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2',)

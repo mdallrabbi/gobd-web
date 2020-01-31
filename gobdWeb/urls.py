@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^store/signin/', auth_views.LoginView.as_view(),{'template_name':'store/signin.html'}, name="store-signin" ),
     url(r'^store/signout', auth_views.LogoutView.as_view(),{'next_page': '/store/signin'}, name="store-signout"),
     url(r'^store/signup', views.store_signup, name="store-signup"),
+    url(r'^store/sign-up', views.auth_signup, name="auth-store-signup"),
     url(r'^store/$', views.store_home, name='store_home'),
 
     url(r'^store/accounts/$', views.store_account, name='store_account'),

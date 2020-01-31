@@ -21,26 +21,11 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
 
-
-@receiver(post_save, sender=User)
-def create_store_login_access(sender, instance, created, **kwargs):
-    if created:
-        Store.objects.create(user=instance)
-    # instance.store.save()
-
-
-@receiver(post_save, sender=User)
-def create_delivery_boy_login_access(sender, instance, created, **kwargs):
-    if created:
-        DeliveryBoy.objects.create(user=instance)
-    # instance.deliveryboy.save()
-
-
 class Store(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='store')
-    store_name = models.CharField(max_length=150)
-    contact_number = models.CharField(max_length=12)
-    business_name = models.CharField(max_length=50, null=True, blank=True)
+    store_name = models.CharField(max_length=150, null=False, blank=False)
+    contact_number = models.CharField(max_length=15, null=False, blank=False)
+    business_name = models.CharField(max_length=50, null=False, blank=False)
     division = models.CharField(max_length=20, choices=DIVISION_CHOICES)
     district = models.CharField(max_length=20, choices=DISTRICT_CHOICES)
     upazila = models.CharField(max_length=20, choices=UPAZILA_CHOICES)
@@ -78,14 +63,14 @@ class Store(models.Model):
 
 class DeliveryBoy(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='delivery_boy')
-    name = models.CharField(max_length=30, null=True, blank=True)
-    number = models.CharField(max_length=12, unique=True)
-    email = models.EmailField(max_length=50, null=True, blank=True)
+    name = models.CharField(max_length=30, null=False, blank=False)
+    number = models.CharField(max_length=15, null=False, blank=False)
+    email = models.EmailField(max_length=50, null=False, blank=False)
     division = models.CharField(max_length=20, choices=DIVISION_CHOICES)
     district = models.CharField(max_length=20, choices=DISTRICT_CHOICES)
     upazila = models.CharField(max_length=20, choices=UPAZILA_CHOICES)
-    address = models.CharField(max_length=50)
-    nid_number = models.CharField(max_length=20)
+    address = models.CharField(max_length=50, null=True, blank=True)
+    nid_number = models.CharField(max_length=20, null=True, blank=True)
     verification = models.FileField(upload_to='disk/delivery_man/%Y/%m/%d/')
 
     def __str__(self):
@@ -176,3 +161,17 @@ class Task(models.Model):
         verbose_name = _("Delivery Task")
         verbose_name_plural = _("Delivery Tasks")
         ordering = ('created_at',)
+
+
+@receiver(post_save, sender=User)
+def create_store_login_access(sender, instance, created, **kwargs):
+    if created:
+        Store.objects.create(user=instance)
+    # instance.store.save()
+
+
+@receiver(post_save, sender=User)
+def create_delivery_boy_login_access(sender, instance, created, **kwargs):
+    if created:
+        DeliveryBoy.objects.create(user=instance)
+    # instance.deliveryboy.save()

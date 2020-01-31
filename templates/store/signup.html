@@ -7,7 +7,7 @@
 {% block content %}
   <form method="POST">
       {% csrf_token %}
-      {{ store_user_form|crispy }}
+      {{ user_form|crispy }}
     <button type="submit" class="btn btn-success">sign up</button>
   </form>
 
