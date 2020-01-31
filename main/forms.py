@@ -1,8 +1,17 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from django.core.validators import ValidationError
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from main.models import Task, Store, DeliveryBoy
+
+
+class StoreSignUpForm(UserCreationForm):
+    # store_name = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2',)
 
 
 class UserForm(forms.ModelForm):
@@ -125,24 +134,23 @@ class StoreForm(forms.ModelForm):
 #             raise ValidationError(self.validation_messages.get("dupicate_number"))
 
 class DeliveryBoyForm(forms.ModelForm):
+    validation_messages = {
+        "dupicate_number": "Number Already exists with Store"
+    }
 
-	validation_messages = {
-		"dupicate_number": "Number Already exists with Store"
-	}
+    class Meta:
+        model = DeliveryBoy
+        fields = ('number',)
 
-	class Meta:
-		model = DeliveryBoy
-		fields = ('number',)
+        labels = {
+            'number': "Enter Contact Number"
+        }
 
-		labels = {
-			'number': "Enter Contact Number"
-		}
-
-	def clean_contact_number(self):
-		cn_instance = self.cleaned_data.get("number")
-		validate = self.__class__._meta.model._default_manager.filter(number=cn_instance).exists()
-		if validate:
-			raise ValidationError(self.validation_messages.get("dupicate_number"))
+    def clean_contact_number(self):
+        cn_instance = self.cleaned_data.get("number")
+        validate = self.__class__._meta.model._default_manager.filter(number=cn_instance).exists()
+        if validate:
+            raise ValidationError(self.validation_messages.get("dupicate_number"))
 
 
 class TaskForm(forms.ModelForm):

@@ -17,7 +17,8 @@ from django.contrib.auth.decorators import user_passes_test
 from rest_framework import viewsets
 from django.views.generic import TemplateView, CreateView, DetailView
 from main.models import Store, Task
-from main.forms import (UserForm,
+from main.forms import (StoreSignUpForm,
+                        UserForm,
                         UserEditForm,
                         StoreForm,
                         TaskForm,
@@ -52,26 +53,21 @@ def store_home(request):
 
 
 def store_signup(request):
-    user_form = UserForm()
-    store_form = StoreForm()
-
     if request.method == "POST":
-        user_form = UserForm(request.POST)
-        store_form = StoreForm(request.POST)
-
-        if user_form.is_valid() and store_form.is_valid():
-            new_user_instance = User.objects.create_user(**user_form.cleaned_data)
-            new_store_instance = store_form.save(commit=False)
-            new_store_instance.user = new_user_instance
-            new_store_instance.save()
-
-            login(request, authenticate(
-                username=user_form.cleaned_data["username"],
-                password=user_form.cleaned_data["password"]
-            ))
+        store_user_form = StoreSignUpForm(request.POST)
+        if store_user_form.is_valid:
+            store = store_user_form.save()
+            store.refresh_from_db()
+            store.save()
+            raw_password = store_user_form.cleaned_data.get('password1')
+            store = authenticate(username=store.username, password=raw_password)
+            login(request, store)
             return redirect(store_home)
+    else:
+        store_user_form = StoreSignUpForm()
+
     return render(request, "store/store_signup.html",
-                  {"user_form": user_form, "store_form": store_form})
+                  {"store_user_form": store_user_form})
 
 
 @login_required(login_url='/store/signin/')
@@ -151,6 +147,7 @@ def delivery_boy_signup(request):
 def delivery_boy_home(request):
     return redirect(deliver_tasks)
     # return render(request, "deliver/tasks.html")
+
 
 @login_required(login_url='/deliver/signin')
 def delivery_boy_account(request):

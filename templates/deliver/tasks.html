@@ -33,9 +33,24 @@
                                 {{ task.priority }}
                             </td>
                             <td>
-                                <button class="btn btn-success" onclick="AcceptTask({{task.id}})">PICKUP</button></td>
-                                <td><button class="btn btn-danger" onclick="RejectTask({{task.id}})">REJECT</button></td>
-                                <td><button class="btn btn-primary" onclick="CompletedTask({{task.id}})">DELIVERED</button>
+                                <!-- Example split danger button -->
+                            <div class="btn-group">
+                              <button type="button" class="btn btn-info">UPDATE</button>
+                              <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="sr-only">Dropdown</span>
+                              </button>
+                              <div class="dropdown-menu">
+                                <button class="btn btn-success" onclick="AcceptTask({{task.id}})">PICKED UP</button>
+                                <div class="dropdown-divider"></div>
+                                <button class="btn btn-danger" onclick="RejectTask({{task.id}})">REJECT</button>
+                                <div class="dropdown-divider"></div>
+                                <button class="btn btn-primary" onclick="CompletedTask({{task.id}})">DELIVERED</button>
+                                <div class="dropdown-divider"></div>
+                              </div>
+                            </div>
+{#                                <button class="btn btn-success" onclick="AcceptTask({{task.id}})">PICKUP</button>#}
+{#                                <button class="btn btn-danger" onclick="RejectTask({{task.id}})">REJECT</button>#}
+{#                                <button class="btn btn-primary" onclick="CompletedTask({{task.id}})">DELIVERED</button>#}
                             </td>
                             <td>
                                 {{task.status}}

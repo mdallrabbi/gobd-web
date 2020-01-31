@@ -22,8 +22,21 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-class Store(models.Model):
+@receiver(post_save, sender=User)
+def create_store_login_access(sender, instance, created, **kwargs):
+    if created:
+        Store.objects.create(user=instance)
+    # instance.store.save()
 
+
+@receiver(post_save, sender=User)
+def create_delivery_boy_login_access(sender, instance, created, **kwargs):
+    if created:
+        DeliveryBoy.objects.create(user=instance)
+    # instance.deliveryboy.save()
+
+
+class Store(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='store')
     store_name = models.CharField(max_length=150)
     contact_number = models.CharField(max_length=12)
@@ -42,9 +55,7 @@ class Store(models.Model):
         return self.store_name
 
     def validate_unique(self, *args, **kwargs):
-        """
-			validates store_name and contact number as a unique
-		"""
+
         super(Store, self).validate_unique(*args, **kwargs)
         sn_qs = self.__class__._default_manager.filter(store_name=self.store_name).exists()
         cn_qs = self.__class__._default_manager.filter(contact_number=self.contact_number).exists()
@@ -130,7 +141,7 @@ class Task(models.Model):
 
     title = models.CharField(max_length=100, help_text="product name")
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
-    delivery_boy = models.ForeignKey(DeliveryBoy, on_delete=models.CASCADE, blank=True, null=True)
+    delivery_boy = models.ForeignKey(DeliveryBoy, on_delete=models.CASCADE)
 
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=ON_DEMAND)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=ACCEPTED)
