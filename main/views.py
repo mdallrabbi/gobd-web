@@ -1,4 +1,6 @@
 import datetime
+from io import BytesIO
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -6,6 +8,7 @@ from django.contrib.auth.models import User
 from django.http.response import HttpResponse
 from django.core.validators import ValidationError
 from django.http import HttpResponseRedirect
+from django.template.loader import get_template
 from django.urls import reverse
 from django.db.models import Q
 from django.shortcuts import render_to_response
@@ -14,8 +17,11 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
+from django.views import View
 from rest_framework import viewsets
 from django.views.generic import TemplateView, CreateView, DetailView
+from xhtml2pdf import pisa
+
 from main.models import Store, Task
 from main.forms import (StoreSignUpForm,
                         UserForm,
@@ -228,6 +234,33 @@ def aboutus(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+# Automaticly downloads to PDF file
+class DownloadPDF(View):
+    def get(self, request, *args, **kwargs):
+        pdf = render_to_pdf('../templates/store/task_details.html')
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Invoice_%s.pdf" % ("")
+        content = "attachment; filename='%s'" % (filename)
+        response['Content-Disposition'] = content
+        return response
+
+def index(request):
+    task_count = User.objects.count()
+    return render(request,'base.html',{
+        'task_count' : task_count,
+    })
 
 # def handler404(request, *args, **argv):
 #     response = render_to_response('custom_404_view.html', {},

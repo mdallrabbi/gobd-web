@@ -26,7 +26,7 @@ from main import views, apis
 urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
-   url(r'^celery/', views.celery_task_checker, name='celery_task_checker'),
+    url(r'^celery/', views.celery_task_checker, name='celery_task_checker'),
 
     url(r'^api_auth_token/', views.get_auth_token, name='gblapi'),
 
@@ -60,6 +60,12 @@ urlpatterns = [
     url(r'^api/deliver/task/complete/$', apis.delivery_boy_complete_task),
     url(r'^api/deliver/task/reject/$', apis.delivery_boy_reject_task),
     url(r'^api/deliver/task/completed_tasks/$', apis.get_deliver_boy_completed_tasks),
+
+    #report url
+    # url(r'^generate_tc/$', views.GenerateTc, name='generate_tc'),
+    # url(r'^generar_pdf/$', views.generar_pdf, name='pdf'),
+    # url('pdf_view/', views.ViewPDF.as_view(), name="pdf_view"),
+    url('pdf_download/', views.DownloadPDF.as_view(), name="pdf_download"),
 
     url(r'^$', views.roothome, name="home"),
     url(r'^services/', views.services, name='services'),

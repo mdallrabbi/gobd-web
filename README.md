@@ -49,3 +49,22 @@ Follow below steps to setup frontend related stuff (Live reloading, SASS compila
  -  `python manage.py createsuperuser` - create a superuser
  - `pytest` - Runs tests with py.test
  - `coverage run -m pytest & coverage html  & open htmlcov/index.html` - Runs tests and check for coverage
+ 
+ 
+ 
+ check list 
+
+ - seller payment (1)
+ - runsheet (1)
+  - page 404(2)
+ - dashboard 2 (2)
+  - account update form store & rider (2)
+ - auth password missmatch report(2) 
+ - django admin graph/ features (3)
+ - crm (3)
+ - scrolling (4)
+ - favicon, header, MVT revision(4)
+ - footer correction (4)
+ - payroll (5)
+ 
+ 
