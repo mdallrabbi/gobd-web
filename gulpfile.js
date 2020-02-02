@@ -36,7 +36,7 @@ var pathsConfig = function (appName) {
             "./node_modules/jquery.counterup/jquery.counterup.min.js"
         ],
         app: this.app,
-        templates: this.app + '/templates',
+        templates: this.app + '/information',
         css: this.app + '/static/css',
         sass: this.app + '/static/scss',
         fonts: this.app + '/static/fonts',

@@ -54,17 +54,29 @@ Follow below steps to setup frontend related stuff (Live reloading, SASS compila
  
  check list 
 
- - seller payment (1)
- - runsheet (1)
-  - page 404(2)
+
+
  - dashboard 2 (2)
-  - account update form store & rider (2)
- - auth password missmatch report(2) 
+# - account update form store & rider (2)
+# - auth password missmatch report(2) 
  - django admin graph/ features (3)
  - crm (3)
  - scrolling (4)
+ - {% if user.is_authenticated %} loop to sign up
+
  - favicon, header, MVT revision(4)
- - footer correction (4)
- - payroll (5)
+# - footer correction (4)
+# - seller payment- sum it to template
+# - runsheet (1)
+# - payroll (5)
+
+
+
+
+
+    
+    
+    
+
  
  

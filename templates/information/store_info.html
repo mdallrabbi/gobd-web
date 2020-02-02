@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block page %}
+    <table  class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th> Seller Name</th>
+            <th> Business Name </th>
+            <th> Address </th>
+            <th> Email </th>
+            <th> Contact No </th>
+        </tr>
+        </thead>
+
+        {% for data in storeupdate %}
+            <tr>
+                <td> {{ data.user_id }}</td>
+                <td> {{ data.seller_name }} </td>
+                <td> {{ data.email }} </td>
+                <td> {{ data.contact_number }} </td>
+
+            </tr>
+        {% endfor %}
+     </table>
+{% endblock page %}

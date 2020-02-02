@@ -13,13 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include, handler404
+from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 #from django.contrib.auth import views as deliver_views
+import accountinfo
 from main import views, apis
+from main.views import *
 
 
 
@@ -36,7 +38,8 @@ urlpatterns = [
     url(r'^store/sign-up', views.auth_signup, name="auth-store-signup"),
     url(r'^store/$', views.store_home, name='store_home'),
 
-    url(r'^store/accounts/$', views.store_account, name='store_account'),
+
+    url(r'^store/accounts/$', views.store_account, name="store_account"),
     url(r'^store/tasks/$', views.store_tasks, name="store_tasks"),
     url(r'^store/tasks/details/(?P<pk>\d+)/', views.TaskDetails.as_view(), name="task_details"),
     url(r'^store/create_task/$', views.create_task, name="create_task"),
@@ -61,6 +64,8 @@ urlpatterns = [
     url(r'^api/deliver/task/reject/$', apis.delivery_boy_reject_task),
     url(r'^api/deliver/task/completed_tasks/$', apis.get_deliver_boy_completed_tasks),
 
+    url(r'^accounts/',include('accountinfo.urls')),
+
     #report url
     # url(r'^generate_tc/$', views.GenerateTc, name='generate_tc'),
     # url(r'^generar_pdf/$', views.generar_pdf, name='pdf'),
@@ -77,5 +82,6 @@ urlpatterns = [
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-# handler404 = 'views.views.handler404'
-# handler500 = 'views.views.handler500'
+handler404 = handler404
+handler500 = handler500
+

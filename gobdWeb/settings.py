@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -27,6 +26,32 @@ DEBUG = True
 
 # ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', 'localhost', '199.192.22.92', 'gobd.delivery']
 ALLOWED_HOSTS = ['*']
+
+# AUTH_USER_MODEL = 'accounts.AuthUser'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+#
+# def get_running_host():
+#     if DEBUG is True:
+#         return '127.0.0.1'
+#     return '127.0.0.1'
+#
+#
+# GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyC7RuSkF7AJ87HY_T8DmL61FRp4d-FJIeg'
+# GEOPOSITION_MAP_OPTIONS = {
+#     'minZoom': 3,
+#     'maxZoom': 20,
+# }
+#
+# GEOPOSITION_MARKER_OPTIONS = {
+#     'cursor': 'move'
+# }
+#
+# GEOPOSITION_MAP_WIDGET_HEIGHT = 400
+#
+# SENDGRID_API_KEY = 'SG.8H-dxdnxTpaw4xnMqiSFKw.FMFjuGp48USx4SWnNWMoBhkqEuU1uhkPgO2noNwHge4'
+# SENDGRID_SENDER = 'ashiqul@ergo-ventures.com'
+
+
 # # ssl certificate
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # SECURE_SSL_REDIRECT = True
@@ -51,6 +76,7 @@ INSTALLED_APPS = [
     'channels',
     'crispy_forms',
     'xhtml2pdf',
+    'accountinfo',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -71,7 +97,9 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
-    )
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',)
 }
 
 ROOT_URLCONF = 'gobdWeb.urls'
@@ -97,7 +125,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gobdWeb.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -119,7 +146,6 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
 
@@ -137,7 +163,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -171,8 +196,8 @@ MEDIA_URL = '/media/'
 
 BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'amqp://localhost'
-#BROKER_URL = 'c'
-#CELERY_IMPORTS = ('google_analytics.tasks')
+# BROKER_URL = 'c'
+# CELERY_IMPORTS = ('google_analytics.tasks')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = ['json']
 CELERY_RESULT_SERIALIZER = ['json']

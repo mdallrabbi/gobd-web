@@ -47,7 +47,7 @@
             var addButton = options.addButton;
             if (addButton === null) {
                 if ($this.prop("tagName") === "TR") {
-                    // If forms are laid out as table rows, insert the
+                    // If main are laid out as table rows, insert the
                     // "add" button in a new table row:
                     var numCols = this.eq(-1).children().length;
                     $parent.append('<tr class="' + options.addCssClass + '"><td colspan="' + numCols + '"><a href="#">' + options.addText + "</a></tr>");
@@ -66,7 +66,7 @@
                 .addClass(options.formCssClass)
                 .attr("id", options.prefix + "-" + nextIndex);
                 if (row.is("tr")) {
-                    // If the forms are laid out in table rows, insert
+                    // If the main are laid out in table rows, insert
                     // the remove button into the last table cell:
                     row.children(":last").append('<div><a class="' + options.deleteCssClass + '" href="#">' + options.deleteText + "</a></div>");
                 } else if (row.is("ul") || row.is("ol")) {
@@ -83,7 +83,7 @@
                 });
                 // Insert the new form when it has been fully edited
                 row.insertBefore($(template));
-                // Update number of total forms
+                // Update number of total main
                 $(totalForms).val(parseInt(totalForms.val(), 10) + 1);
                 nextIndex += 1;
                 // Hide add button in case we've hit the max, except we want to add infinitely

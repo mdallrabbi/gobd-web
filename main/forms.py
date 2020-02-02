@@ -1,3 +1,5 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, ButtonHolder, Submit
 from django import forms
 from django.utils.translation import ugettext as _
 from django.core.validators import ValidationError
@@ -6,11 +8,40 @@ from django.contrib.auth.models import User
 from main.models import Task, Store, DeliveryBoy
 
 
+##clean code for main.py
+
 class StoreSignUpForm(UserCreationForm):
-    # store_name = forms.CharField()
-    class Meta:
-        model = User
-        fields = ('username', 'password1', 'password2',)
+    def __init__(self, *args, **kwargs):
+        super(StoreSignUpForm, self).__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'username',
+            'password1',
+            'password2',
+            ButtonHolder(
+                Submit('register', 'signup', css_class='btn btn-success')
+            )
+        )
+
+    # class Meta:
+    #     model = User
+    #     fields = ('username', 'password1', 'password2',)
+
+
+# class StoreUpdateForm(forms.ModelForm):
+#
+#     class Meta:
+#         model = Store
+#         fields = ('store_name', 'seller_name', 'email', 'contact_number',
+#                   'division', 'district', 'upazila', 'business_address', 'nid_number', 'verification')
+#
+#         def __init__(self, *args, **kwargs):
+#             super().__init__(*args, **kwargs)
+#             self.helper = FormHelper()
+#             self.helper.form_method = 'post'
+#             self.helper.add_input(Submit('submit', 'save seller profile'))
+
 
 
 class UserForm(forms.ModelForm):
@@ -52,32 +83,34 @@ class StoreForm(forms.ModelForm):
 
     class Meta:
         model = Store
-        fields = ('store_name', 'contact_number', 'business_name', 'division',
-                  'district', 'upazila', 'business_address', 'nid_number', 'verification')
+        fields = ('store_name', 'contact_number')
+        # fields = ('store_name', 'contact_number',
+        #           'division', 'district', 'upazila', 'business_address', 'nid_number', 'verification')
 
         labels = {
             'store_name': "seller name",
-            'contact_number': "in +8801XXXXXXXXX pattern",
-            'business_name': "business name",
-            'division': "division",
-            'district': "district",
-            'upazila': "upazila",
-            'business_address': "business address",
-            'nid_number': "a valid identification number",
-            'verification': "upload verification image",
+            # 'seller_name': "seller name",
+            # 'email': "email",
+            'contact_number': "in +8801XXXXXXXXX format",
+            # 'division': "division",
+            # 'district': "district",
+            # 'upazila': "upazila",
+            # 'business_address': "business address",
+            # 'nid_number': "a valid identification number",
+            # 'verification': "upload verification image",
         }
 
     def __init__(self, *args, **kwargs):
         super(StoreForm, self).__init__(*args, **kwargs)
         self.fields['store_name'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['seller_name'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['email'].widget.attrs.update({'class': 'form-control'})
         self.fields['contact_number'].widget.attrs.update({'class': 'form-control'})
-        self.fields['business_name'].widget.attrs.update({'class': 'form-control'})
-        self.fields['division'].widget.attrs.update({'class': 'form-control'})
-        self.fields['district'].widget.attrs.update({'class': 'form-control'})
-        self.fields['upazila'].widget.attrs.update({'class': 'form-control'})
-        self.fields['business_address'].widget.attrs.update({'class': 'form-control'})
-        self.fields['nid_number'].widget.attrs.update({'class': 'form-control'})
-        self.fields['verification'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['division'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['district'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['upazila'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['nid_number'].widget.attrs.update({'class': 'form-control'})
+        # self.fields['verification'].widget.attrs.update({'class': 'form-control'})
 
     def clean_store_name(self):
         sn_instance = self.cleaned_data.get("store_name")
@@ -92,7 +125,7 @@ class StoreForm(forms.ModelForm):
             raise ValidationError(self.validation_messages.get("dupicate_number"))
 
 
-# class DeliveryBoyForm(forms.ModelForm):
+# class DeliveryBoyForm(main.ModelForm):
 #     validation_messages = {
 #         "duplicate_number": "number already exists with gobd.delivery"
 #     }
@@ -142,7 +175,7 @@ class DeliveryBoyForm(forms.ModelForm):
         fields = ('number',)
 
         labels = {
-            'number': "Enter Contact Number"
+            'number': "in +8801XXXXXXXXX format"
         }
 
     def clean_contact_number(self):

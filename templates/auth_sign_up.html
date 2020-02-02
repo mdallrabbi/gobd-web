@@ -1,14 +1,15 @@
 {% extends 'base_signup.html' %}
 {% load crispy_forms_tags %}
-
 {% block title %}seller sign up{% endblock %}
-{% block heading %}sign up to gobd.delivery {% endblock %}
+{% block heading %}sign up for gobd.delivery {% endblock %}
 
 {% block content %}
   <form method="POST">
-    {% csrf_token %}
-    {{ auth_signup|crispy }}
-    <button type="submit" class="btn btn-success">sign up</button>
+      {% csrf_token %}
+      {% crispy auth_signup %}
+      {% if auth_signup.errors %}
+          <p>password didn't matched correctly</p>
+      {% endif %}
   </form>
   <a href="{% url 'store-signin' %}">already have an account?</a>
 {% endblock content %}

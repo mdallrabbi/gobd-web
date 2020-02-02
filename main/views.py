@@ -4,12 +4,14 @@ from io import BytesIO
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.conf import settings
+
 from django.http.response import HttpResponse
 from django.core.validators import ValidationError
 from django.http import HttpResponseRedirect
 from django.template.loader import get_template
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -19,7 +21,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
 from django.views import View
 from rest_framework import viewsets
-from django.views.generic import TemplateView, CreateView, DetailView
+from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, ListView
 from xhtml2pdf import pisa
 
 from main.models import Store, Task
@@ -28,11 +30,13 @@ from main.forms import (StoreSignUpForm,
                         UserEditForm,
                         StoreForm,
                         TaskForm,
-                        DeliveryBoyForm)
-
+                        DeliveryBoyForm
+                        )
 
 # from store.tasks import store_created_new_task_notification
 # Create your views here.
+
+User = settings.AUTH_USER_MODEL
 
 
 def celery_task_checker(request):
@@ -58,6 +62,8 @@ def store_home(request):
     return redirect(store_tasks)
 
 
+##clean code for views.py
+
 def auth_signup(request):
     if request.method == "POST":
         auth_signup = StoreSignUpForm(request.POST)
@@ -65,8 +71,9 @@ def auth_signup(request):
             store = auth_signup.save()
             store.refresh_from_db()
             store.save()
+            username = auth_signup.cleaned_data.get('username')
             raw_password = auth_signup.cleaned_data.get('password1')
-            store = authenticate(username=store.username, password=raw_password)
+            store = authenticate(username=username, password=raw_password)
             login(request, store)
             return redirect(store_home)
     else:
@@ -74,6 +81,27 @@ def auth_signup(request):
 
     return render(request, "auth_sign_up.html",
                   {"auth_signup": auth_signup})
+
+
+# class StoreListView(ListView):
+#     model = Store
+#     context_object_name = 'list'
+#
+#
+# class StoreCreateView(CreateView):
+#     model = Store
+#     fields = '__all__'
+#     success_url = reverse_lazy('store_list')
+#
+#
+# class StoreUpdateView(UpdateView):
+#     model = Store
+#     form_class = StoreUpdateForm
+#     template_name = 'main/store_account.html'
+#     success_url = reverse_lazy('store_list')
+#
+#
+
 
 
 def store_signup(request):
@@ -245,6 +273,7 @@ def render_to_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
+
 # Automaticly downloads to PDF file
 class DownloadPDF(View):
     def get(self, request, *args, **kwargs):
@@ -256,20 +285,21 @@ class DownloadPDF(View):
         response['Content-Disposition'] = content
         return response
 
+
 def index(request):
     task_count = User.objects.count()
-    return render(request,'base.html',{
-        'task_count' : task_count,
+    return render(request, 'base.html', {
+        'task_count': task_count,
     })
 
-# def handler404(request, *args, **argv):
-#     response = render_to_response('custom_404_view.html', {},
-#                                   context_instance=RequestContext(request))
-#     response.status_code = 404
-#     return response
-#
-# def handler500(request, *args, **argv):
-#     response = render_to_response('custom_404_view.html', {},
-#                                   context_instance=RequestContext(request))
-#     response.status_code = 500
-#     return response
+
+def handler404(request, exception, template_name="404.html"):
+    response = render_to_response("custom_404_view.html")
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render_to_response("custom_404_view.html")
+    response.status_code = 500
+    return response

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block page %}
+    <a href="{% url 'store_detail' pk %}">
+    <h1> {{ storeupdate.user_id }} </h1>
+    </a>
+    <div>
+        <h2>Details</h2>
+        <p>store ID: {{ storeupdate.store_name }} </p>
+        <p>Contact No: {{ storeupdate.seller_name }} </p>
+        <p>Email : {{ storeupdate.email }}</p>
+    </div>
+{% endblock page %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block page %}
+    <a href="{% url 'delivery_boy_detail' pk %}">
+    <h1> {{ deliveryboyupdate.user_id }} </h1>
+    </a>
+    <div>
+        <h2>Details</h2>
+        <p>Rider ID: {{ deliveryboyupdate.name }} </p>
+        <p>Contact No: {{ deliveryboyupdate.number }} </p>
+        <p>Email : {{ deliveryboyupdate.email }}</p>
+    </div>
+{% endblock page %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %} seller registration {% endblock title %}
+
+
+{% block page %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success" type="submit">submit</button>
+</form>
+
+{#<form method="POST">#}
+{#    {%csrf_token%}#}
+{#    {% crispy form %}#}
+{#    {{ form.as_p }}#}
+{#    <button class="btn btn-success" type="submit">submit</button>#}
+{#</form>#}
+
+{% endblock page %}
