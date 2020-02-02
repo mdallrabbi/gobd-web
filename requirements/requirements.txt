@@ -31,7 +31,7 @@ django-crispy-forms==1.8.1
 django-google-analytics-app==4.4.0
 django-oauth-toolkit==1.2.0
 django-rest-framework-social-oauth2==1.0.4
-djangorestframework==3.11.0
+djangorestframework==3.9.1
 gunicorn==19.6.0
 hyperlink==19.0.0
 idna==2.8
