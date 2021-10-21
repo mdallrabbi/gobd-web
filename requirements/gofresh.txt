@@ -1,7 +1,7 @@
 amqp==2.1.4
 argh==0.26.2
 awscli==1.11.29
-Babel==2.3.4
+Babel==2.9.1
 billiard==3.5.0.2
 boto==2.45.0
 botocore==1.4.86
