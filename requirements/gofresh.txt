@@ -11,7 +11,7 @@ celery==4.0.2
 cffi==1.9.1
 colorama==0.3.7
 cssselect==1.0.1
-Django==2.2.13
+Django==2.2.27
 django-crispy-forms==1.6.1
 django-filter==1.0.1
 django-geoposition==0.3.0
