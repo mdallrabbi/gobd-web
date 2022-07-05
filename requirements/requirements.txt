@@ -73,7 +73,7 @@ tornado==4.5.2
 tornado-jinja2==0.2.4
 Twisted==20.3.0
 txaio==20.1.1
-ujson==1.35
+ujson==5.4.0
 urllib3==1.25.8
 uvloop==0.13.0
 watchdog==0.8.3
